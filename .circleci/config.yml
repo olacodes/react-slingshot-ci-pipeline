@@ -12,7 +12,6 @@ jobs:
           paths:
             - /src/node_modules
       - run: npm run lint
-    
   test:
     docker:
       - image: circleci/node:13.8.0
@@ -23,7 +22,6 @@ jobs:
             - "npm-packages"
       - run: npm i
       - run: npm run test
-
   analyze:
     docker:
       - image: circleci/node:13.8.0
@@ -35,13 +33,12 @@ jobs:
       - run: npm run audit
 
 workflow:
-  slingshot_workflow:
+  my_workflow:
     jobs:
       - build
-      - test
+      - test:
+        requires:
+          - build
       - analyze:
           requires:
             - test
-
-
-
